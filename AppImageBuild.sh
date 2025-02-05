@@ -21,7 +21,7 @@ chmod +x appimagetool-x86_64.AppImage
 AID='dist/release/AppImageDir/'
 mkdir -p $AID/usr/bin
 ## 3.1 copy executable to AppImage Directory
-cp $executable $AID/usr/bin/BlenderLauncher
+cp $executable $AID/usr/bin/Blender\ Launcher
 ## 3.2 copy icon to AID
 cp source/resources/icons/bl/bl_256.png $AID/
 
@@ -45,7 +45,7 @@ EOF
 #!/bin/bash
 #exec '$HERE/usr/bin/BlenderLauncher'
 #EOF
-ln -s usr/bin/BlenderLauncher $AID/AppRun
+ln -s usr/bin/Blender\ Launcher $AID/AppRun
 ## 5.5 Make it executable
 chmod +x $AID/AppRun
 
