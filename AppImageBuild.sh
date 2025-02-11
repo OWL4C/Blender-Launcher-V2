@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 
 # SPDX-License-Identifier: GPL-3.0-or-later or MIT or 0BSD
@@ -14,14 +14,20 @@ sh scripts/build_linux.sh
 executable='dist/release/Blender Launcher'
 
 # 2. Download AppImage Tool (ENSURE YOU HAVE ZSYNC INSTALLED)
-wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
-chmod +x appimagetool-x86_64.AppImage
+#wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+if [ -f "appimagetool-x86_64.AppImage" ]
+then
+	chmod +x appimagetool-x86_64.AppImage
+else 
+	printf "AppImageTool must be downloaded \n wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage \n" >&2
+	exit 1
+fi
 
 # 3. Create AppImage FS
 AID='dist/release/AppImageDir/'
 mkdir -p $AID/usr/bin
 ## 3.1 copy executable to AppImage Directory
-cp $executable $AID/usr/bin/Blender\ Launcher
+cp "$executable" "$AID/usr/bin/Blender Launcher"
 ## 3.2 copy icon to AID
 cp source/resources/icons/bl/bl_256.png $AID/
 
@@ -45,7 +51,7 @@ EOF
 #!/bin/bash
 #exec '$HERE/usr/bin/BlenderLauncher'
 #EOF
-ln -s usr/bin/Blender\ Launcher $AID/AppRun
+ln -s "usr/bin/Blender Launcher" $AID/AppRun
 ## 5.5 Make it executable
 chmod +x $AID/AppRun
 
@@ -53,5 +59,5 @@ chmod +x $AID/AppRun
 ARCH=x86_64 ./appimagetool-x86_64.AppImage $AID BlenderLauncher.AppImage
 
 # 7. Cleanup
-rm appimagetool-x86_64.AppImage
+#rm appimagetool-x86_64.AppImage
 rm -rf $AID
